@@ -1,0 +1,17 @@
+# Azureへのログイン
+az login
+
+ACR_NAME=sampleAzureContainerRegistry
+ACR_RES_GROUP=sample-acr-resource-group
+
+# Resourse Groupの作成
+az group create --resource-group $ACR_RES_GROUP --location japaneast
+
+# Azure Container Registryの作成
+az acr create --resource-group $ACR_RES_GROUP --name $ACR_NAME --sku Standard --location japaneast
+
+# V1.0のコンテナイメージのビルド
+az acr build --registry $ACR_NAME --image photo-view:v1.0 v1.0/
+
+# Resource Groupの削除
+az group delete --name $ACR_RES_GROUP
